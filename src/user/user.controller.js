@@ -3,8 +3,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 // import {signupSchema,signinSchema} from "./user.validation.js"
 import sendemail from "../../utils/sendouremail.js";
+import handlError from "../../utils/handleAsyncError.js";
 
-  const signup = async(req, res) => {
+  const signup =handlError( async(req, res) => {
   // let errors=signupSchema.validate(req.body,{abortEarly:false});
   // if(req.body.password != req.body.passwordconfi)
   // if(errors?.error){
@@ -32,10 +33,10 @@ import sendemail from "../../utils/sendouremail.js";
     sendemail(req.body.email,{url:`http://localhost:3000/user/verify/${token}`})
         res.json({done:adduser});
     // }
-}}
+}})
 
 
-  const signin=async(req,res)=>{
+  const signin=handlError(async(req,res)=>{
   // let errors=signinSchema.validate(req.body,{abortEarly:false});
   // if(errors?.error){
       // res.json({message:"validation error",details:errors?.error?.details})
@@ -52,18 +53,18 @@ if(changhash){
   res.json({messge:"passowrd not valid"})
 }
 // }
-}
- const userdata=async(req,res)=>{
+})
+ const userdata=handlError(async(req,res)=>{
   jwt.verify(req.body.token,"hhhhhh", async function(err,decoded){
     let userdata=await userModel.findById(decoded.id);
      res.json({messge:"done",userdata})
 
   }) 
-}
- const veraccount=async(req,res)=>{
+})
+ const veraccount=handlError(async(req,res)=>{
      res.json({messge:"hellooo"})
 
-  }
+  })
 
 
    export { 
