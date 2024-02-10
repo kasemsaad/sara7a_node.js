@@ -1,6 +1,7 @@
 import messageModel from "../../db/message.model.js";
 import userModel from "../../db/user.model.js";
 import jwt from "jsonwebtoken"
+import sendemail from "./../../utils/sendouremail.js"
 
 
 export const addmessages=async(req,res)=>{
@@ -13,6 +14,7 @@ export const addmessages=async(req,res)=>{
 
   }
  export const getmessages=(req,res)=>{
+  sendemail(option)
     console.log(req.body)
     jwt.verify(req.body.token,"hhhhhh", async function(err,decoded){
       console.log(decoded)
